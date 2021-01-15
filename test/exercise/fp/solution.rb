@@ -5,17 +5,17 @@ module Exercise
       # film["name"], film["rating_kinopoisk"], film["rating_imdb"],
       # film["genres"], film["year"], film["access_level"], film["country"]
       def rating(array)
-        films_sort = array.select do |film|
-          film['rating_kinopoisk'].to_f.positive? &&
-            film['country'].to_s.split(',').length > 1
+        sorted_films = array.select do |film|
+          film['rating_kinopoisk'].to_f.positive? && !film['rating_kinopoisk'].nil? &&
+            !film['rating_kinopoisk'].nil? && film['country'].to_s.split(',').length > 1
         end
-        result = films_sort.map { |film| film['rating_kinopoisk'].to_f }.reduce(:+)
-        result / films_sort.length
+        result = sorted_films.reduce(0) { |sum, film| sum + film['rating_kinopoisk'].to_f }
+        result / sorted_films.length
       end
 
       def chars_count(films, threshold)
         films.select { |film| film['rating_kinopoisk'].to_f >= threshold }
-             .map { |film| film['name'] }.join('').count('и')
+             .reduce(0) { |sum, film| sum + film['name'].count('и') }
       end
     end
   end
