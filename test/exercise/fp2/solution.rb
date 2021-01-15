@@ -6,11 +6,10 @@ module Exercise
 
       # Написать свою функцию my_each
       def my_each
-        i = 0
         array = self
-        while i < array.length
+        array.length.times do |i = 0|
           yield array[i]
-          i += 1
+          i + 1
         end
         array
       end
