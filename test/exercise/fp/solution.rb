@@ -6,8 +6,7 @@ module Exercise
       # film["genres"], film["year"], film["access_level"], film["country"]
       def rating(array)
         sorted_films = array.select do |film|
-          film['rating_kinopoisk'].to_f.positive? && !film['rating_kinopoisk'].nil? &&
-            !film['rating_kinopoisk'].nil? && film['country'].to_s.split(',').length > 1
+          film['country']&.include?(',') && film['rating_kinopoisk'].to_f&.positive?  
         end
         result = sorted_films.reduce(0) { |sum, film| sum + film['rating_kinopoisk'].to_f }
         result / sorted_films.length
